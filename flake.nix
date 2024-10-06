@@ -13,31 +13,34 @@
 
   };
 
-  outputs = { self, nixpkgs,/* home-manager,*/ ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
+    # Injecting into Output
     let 
+
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+
     in {
+
       nixosConfigurations = {
         ATH0MOS = lib.nixosSystem {
-          inherit system;
+          inherit system; # passes system to scope
           modules = [
-            /home/ath0mos_/.dotfiles/systemSettings/configuration.nix
+            ./systemSettings/configuration.nix
           ];
         };
       };
 
-/* FOR ENABLING HOME-MANAGER
-      homeConfiguration = {
+    # HOME-MANAGER
+      homeConfigurations = {
         ath0mos_ = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
-            ./home.nix
+            /home/ath0mos_/.dotfiles/homeManager/home.nix
           ];
         };
       };
-*/
 
       # Adding pkgs to the dev-enviroment
       /*devShells.x86_64-linux.default = pkgs.mkShell {

@@ -4,7 +4,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Daily Apps
-    neovim
+    pkgs.neovim
 
     wget
     firefox
@@ -13,11 +13,15 @@
     git
     neofetch
     thunderbird
+    
+    killall
 
     # Needed compiler for nvim
     clang
     gcc
     cmake
+    pkgs.nodejs
+    pkgs.python3
 
     # File Manager
     #thunar # With GUI
@@ -31,10 +35,16 @@
     keepassxc
 
     # Wayland related pkgs
+    /*
     (pkgs.waybar.overrideAttrs (oldAttrs: {
       mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
     })
     )
+    */
+
+    # Widgets
+    eww
+
 
     # Screen Lock
     hyprlock
